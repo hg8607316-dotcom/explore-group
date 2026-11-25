@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Group Explorer: Groups of Fraleigh’s Abstract Algebra</title>
+<style>
+:root{--bg:#f6f4ee;--sf:#fff;--tx:#1d2233;--mu:#5d6478;--ac:#2f3fa8;--hi:#b45f06;--bd:#d9d5c8;--ok:#1b7a4b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12162a;--sf:#1b2040;--tx:#e8eaf6;--mu:#9aa2c4;--ac:#8fa2ff;--hi:#ffb454;--bd:#323a6b;--ok:#6fdc9f}}
+:root[data-theme="dark"]{--bg:#12162a;--sf:#1b2040;--tx:#e8eaf6;--mu:#9aa2c4;--ac:#8fa2ff;--hi:#ffb454;--bd:#323a6b;--ok:#6fdc9f}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.7rem;margin:.2em 0 .1em;letter-spacing:-.01em}
+.sub{color:var(--mu);margin:0 0 18px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+nav button{font:600 .9rem system-ui,sans-serif;padding:8px 14px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:6px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+section{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:18px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+label{font:.85rem system-ui,sans-serif;color:var(--mu);display:flex;flex-direction:column;gap:3px}
+input{font:1rem ui-monospace,Menlo,monospace;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;background:var(--bg);color:var(--tx);width:200px;max-width:100%}
+.go{font:600 .95rem system-ui,sans-serif;padding:9px 16px;background:var(--hi);color:#fff;border:0;border-radius:6px;cursor:pointer}
+.k{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.k div{border:1px solid var(--bd);border-radius:6px;padding:8px 12px;background:var(--bg)}
+.k b{display:block;font-size:1.4rem;color:var(--ac)}
+.k span{font:.8rem system-ui,sans-serif;color:var(--mu)}
+.sc{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;font:.85rem ui-monospace,Menlo,monospace}
+th,td{border:1px solid var(--bd);padding:4px 8px;text-align:center;white-space:nowrap}
+th{background:var(--bg)}
+.bar{display:flex;align-items:center;gap:8px;font:.85rem ui-monospace,monospace;margin:3px 0}
+.bar i{display:block;height:14px;background:var(--ac);border-radius:2px}
+.note{color:var(--mu);font-size:.92rem}
+h3{margin:16px 0 4px;font-size:1.05rem}
+.ev{color:var(--ok)}.od{color:var(--hi)}
+nav{flex-wrap:nowrap;overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:6px 0;scrollbar-width:thin}
+nav button{white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:10px}
+.card{border:1px solid var(--bd);border-radius:10px;padding:12px 14px;background:var(--bg);display:flex;flex-direction:column;gap:4px}
+.card h3{margin:0;font-size:1rem}.card p{margin:2px 0;font-size:.9rem}
+.sym{font:700 1.45rem Georgia,serif;color:var(--ac)}
+.tags{display:flex;gap:4px;flex-wrap:wrap}.tags span{font:.72rem system-ui,sans-serif;padding:1px 8px;border:1px solid var(--bd);border-radius:99px;color:var(--mu)}
+.ref{font:.75rem system-ui,sans-serif;color:var(--mu)}
+.chip{font:600 .8rem system-ui,sans-serif;padding:6px 12px;border:1px solid var(--bd);border-radius:99px;background:var(--sf);color:var(--tx);cursor:pointer;margin-right:4px}
+.chip[aria-pressed="true"]{background:var(--hi);color:var(--bg);border-color:var(--hi)}
+.sm{padding:6px 12px;font-size:.82rem;margin-top:auto;align-self:flex-start}
+.tl th,.tl td{text-align:left;white-space:normal;font:.86rem/1.35 system-ui,sans-serif;vertical-align:top}.tl td:first-child{font:700 1.05rem Georgia,serif;color:var(--ac);white-space:nowrap}.tl .go{margin:0}
+.def{border-left:4px solid var(--ac);padding:6px 12px;margin:8px 0;background:var(--bg);border-radius:0 6px 6px 0}.def b{color:var(--ac)}.def small{color:var(--mu);font:.75rem system-ui,sans-serif}
+
+.xq{border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.xq h4{margin:0 0 4px;font-size:1rem}.xq h4 small{color:var(--mu);font:.8rem system-ui,sans-serif;margin-left:6px}
+.xq .row{margin:8px 0 4px;align-items:center}.xq input{width:150px}
+.xq .chk{font:600 .9rem system-ui,sans-serif;padding:8px 14px;background:var(--ac);color:var(--bg);border:0;border-radius:6px;cursor:pointer}
+.xq .go2{font:600 .85rem system-ui,sans-serif;padding:6px 10px;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:6px;cursor:pointer}
+.xq .fb{font:600 .92rem system-ui,sans-serif}.xq .fb.y{color:var(--ok)}.xq .fb.n{color:var(--hi)}
+.xq details{margin-top:6px}.xq summary{cursor:pointer;font:600 .88rem system-ui,sans-serif;color:var(--ac)}
+.xq[data-ok="1"]{border-color:var(--ok)}
+.score{position:sticky;top:46px;background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:6px 12px;font:600 .95rem system-ui,sans-serif;display:inline-block}
+</style></head><body><main>
+<h1>Group Explorer</h1>
+<p class="sub">Every group and topic in Fraleigh–Brand, <i>A First Course in Abstract Algebra</i> (8th ed.): a filterable list of every group (abelian, cyclic, dihedral, permutation, …) and definitions, plus live explorers for abelian, permutation and dihedral groups.</p>
+<nav role="tablist" id="tabs"></nav>
+<section id="out"></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const gcd=(a,b)=>b?gcd(b,a%b):a, lcm=(a,b)=>a/gcd(a,b)*b;
+const phi=n=>{let c=0;for(let k=1;k<=n;k++)if(gcd(k,n)==1)c++;return c};
+function factor(n){const f={};for(let p=2;p*p<=n;p++)while(n%p==0){f[p]=(f[p]||0)+1;n/=p}if(n>1)f[n]=(f[n]||0)+1;return f}
+function parts(n,max=n){if(n==0)return[[]];let r=[];for(let k=Math.min(n,max);k>=1;k--)for(const t of parts(n-k,k))r.push([k,...t]);return r}
+const tex=a=>a.map(m=>"Z<sub>"+m+"</sub>").join(" × ")||"trivial";
+const hist=(arr)=>{const h={};arr.forEach(o=>h[o]=(h[o]||0)+1);return h};
+function histHTML(h){const mx=Math.max(...Object.values(h));return Object.keys(h).map(Number).sort((a,b)=>a-b).map(o=>`<div class="bar"><span style="width:70px">order ${o}</span><i style="width:${Math.max(4,h[o]/mx*220)}px"></i>${h[o]}</div>`).join("")}
+function kp(a){return `<div class="k">${a.map(([v,l])=>`<div><b>${v}</b><span>${l}</span></div>`).join("")}</div>`}
+
+// ---- Abelian classification
+function classify(n){
+ const f=factor(n),ps=Object.keys(f).map(Number),opts=ps.map(p=>parts(f[p]));
+ let combos=[[]];for(const o of opts)combos=combos.flatMap(c=>o.map(x=>[...c,x]));
+ return [combos.map(c=>{const ed=[];c.forEach((pt,i)=>pt.forEach(e=>ed.push(ps[i]**e)));
+  const L=Math.max(...c.map(p=>p.length),0),inv=[];
+  for(let j=0;j<L;j++){let d=1;c.forEach((pt,i)=>{if(pt[j])d*=ps[i]**pt[j]});inv.push(d)}
+  return{ed:ed.sort((a,b)=>a-b),inv:inv.reverse()}}),ps,f]}
+function viewAbelian(){
+ return `<div class="row"><label>Order n<input id="n" type="number" min="1" max="2000" value="72"></label><button class="go" id="b">Classify</button></div><div id="r"></div>
+ <p class="note">Theorem: every finite abelian group is a product of cyclic groups. The number of groups of order n = ∏ p(a<sub>i</sub>), where n = ∏ p<sub>i</sub><sup>a<sub>i</sub></sup> and p(a) is the partition number.</p>`+rl("shift ciphers and rotating positions (Z<sub>n</sub>)",`<p><b>Problem.</b> A message must be encrypted by shifting letters, and a rotating sprinkler or camera must step through n positions without missing any.</p><p><b>Solution with Z<sub>n</sub>.</b> Letters are the elements of Z<sub>26</sub>. Encrypting with key k adds k mod 26, and decrypting adds the inverse 26 − k. For example HELLO with k = 3 becomes KHOOR, and k = 23 undoes it. A device that steps k positions around n positions visits every one exactly when gcd(k, n) = 1, which is why the generators of Z<sub>n</sub> listed above (φ(n) of them) are the only good step sizes.</p>`)}
+function abTables(g,n){
+ if(n>36)return `<h3>Cayley tables</h3><p class="note">Tables are shown for n ≤ 36 (a table has n² cells). Use the Z<sub>n</sub> product builder for larger groups.</p>`;
+ return `<h3>Cayley table of every abelian group of order ${n}</h3>`+g.map((x,gi)=>{
+  const m=x.inv.length?x.inv:[1];let els=[[]];for(const mi of m)els=els.flatMap(e=>[...Array(mi).keys()].map(v=>[...e,v]));
+  const f=e=>m.length==1?""+e[0]:"("+e.join(",")+")",ord=e=>e.reduce((o,v,i)=>lcm(o,m[i]/gcd(m[i],v)),1);
+  const add=(a,b)=>a.map((v,i)=>(v+b[i])%m[i]),ix=new Map(els.map((e,i)=>[e.join(),i])),os=els.map(ord);
+  return `<h3 style="margin-top:22px">Group ${gi+1}: ${tex(x.inv)} <span class="note">(${Math.max(...os)==n?"cyclic":"non-cyclic"}, largest element order ${Math.max(...os)})</span></h3>`+
+  `<div class="sc"><table><tr><th>+</th>${els.map(e=>`<th>${f(e)}</th>`).join("")}</tr>`+els.map(a=>`<tr><th>${f(a)}</th>${els.map(b=>`<td>${f(els[ix.get(add(a,b).join())])}</td>`).join("")}</tr>`).join("")+`</table></div>`+
+  `<div>${histHTML(hist(os))}</div>`}).join("")}
+function runAbelian(){
+ const n=+$("#n").value;if(!(n>=1&&n<=2000)){$("#r").innerHTML="<p>Enter n between 1 and 2000.</p>";return}
+ const[g,ps,f]=classify(n);
+ const cnt=ps.map(p=>`p(${f[p]})`).join(" · ")||"1";
+ $("#r").innerHTML=kp([[g.length,"abelian groups of order "+n],[phi(n),"generators of Z"+n+" (φ("+n+"))"]])+
+ `<p class="note">n = ${ps.map(p=>p+(f[p]>1?"<sup>"+f[p]+"</sup>":"")).join(" · ")||1}, count = ${cnt}</p>`+
+ `<div class="sc"><table><tr><th>#</th><th>Elementary divisors</th><th>Invariant factors (d<sub>1</sub> | d<sub>2</sub> | …)</th><th>Cyclic?</th></tr>`+
+ g.map((x,i)=>`<tr><td>${i+1}</td><td>${tex(x.ed)}</td><td>${tex(x.inv)}</td><td>${x.inv.length<=1?"yes":"no"}</td></tr>`).join("")+`</table></div>`+abTables(g,n)+
+ `<h3>Generators of Z<sub>${n}</sub></h3><p>${[...Array(n).keys()].filter(k=>gcd(k,n)==1||(n==1&&k==0)).join(", ")}</p>`+
+ `<h3>φ(m) for m ≤ 20</h3><div class="sc"><table><tr><th>m</th>${[...Array(20)].map((_,i)=>`<td>${i+1}</td>`).join("")}</tr><tr><th>φ(m)</th>${[...Array(20)].map((_,i)=>`<td>${phi(i+1)}</td>`).join("")}</tr></table></div>`}
+
+// ---- Builder Z_m1 x ... x Z_mk
+function viewBuilder(){return `<div class="row"><label>Moduli (space separated)<input id="m" value="2 2"></label><button class="go" id="b">Build group</button></div><div id="r"></div>
+<p class="note">Order of (x<sub>1</sub>,…,x<sub>k</sub>) = lcm of m<sub>i</sub>/gcd(m<sub>i</sub>,x<sub>i</sub>). Inverse = (−x<sub>i</sub> mod m<sub>i</sub>). Try "2 2" vs "4" to see Z<sub>2</sub>×Z<sub>2</sub> has no element of order 4.</p>`}
+function runBuilder(){
+ const m=$("#m").value.trim().split(/\s+/).map(Number).filter(x=>x>=1);
+ const N=m.reduce((a,b)=>a*b,1);
+ if(!m.length||N>4000){$("#r").innerHTML="<p>Use positive moduli with total order ≤ 4000.</p>";return}
+ let els=[[]];for(const mi of m)els=els.flatMap(e=>[...Array(mi).keys()].map(x=>[...e,x]));
+ const ord=e=>e.reduce((o,x,i)=>lcm(o,m[i]/gcd(m[i],x)),1);
+ const os=els.map(ord),h=hist(os),cyc=Math.max(...os)==N;
+ const f=e=>"("+e.join(",")+")";
+ let html=kp([[N,"order of group"],[Math.max(...os),"largest element order"],[cyc?"yes":"no","cyclic?"]])+`<h3>Order histogram</h3>`+histHTML(h);
+ if(N<=24){const add=(a,b)=>a.map((x,i)=>(x+b[i])%m[i]);const ix=e=>els.findIndex(z=>z.every((v,i)=>v==e[i]));
+  html+=`<h3>Cayley table</h3><div class="sc"><table><tr><th>+</th>${els.map(e=>`<th>${f(e)}</th>`).join("")}</tr>`+els.map(a=>`<tr><th>${f(a)}</th>${els.map(b=>`<td>${f(add(a,b))}</td>`).join("")}</tr>`).join("")+`</table></div>`}
+ html+=`<h3>Elements, orders and inverses</h3><div class="sc"><table><tr><th>element</th><th>order</th><th>inverse</th></tr>`+els.slice(0,200).map((e,i)=>`<tr><td>${f(e)}</td><td>${os[i]}</td><td>${f(e.map((x,j)=>(m[j]-x)%m[j]))}</td></tr>`).join("")+`</table></div>${N>200?'<p class="note">First 200 elements shown.</p>':""}`;
+ $("#r").innerHTML=html}
+
+// ---- Permutations
+function cycles(p){const n=p.length,seen=Array(n).fill(0),c=[];for(let i=0;i<n;i++)if(!seen[i]){const cy=[];let j=i;while(!seen[j]){seen[j]=1;cy.push(j+1);j=p[j]}c.push(cy)}return c}
+const pord=p=>cycles(p).reduce((o,c)=>lcm(o,c.length),1);
+const psign=p=>((p.length-cycles(p).length)%2?-1:1);
+function allPerms(n){if(n==1)return[[0]];const r=[];for(const q of allPerms(n-1))for(let i=0;i<=q.length;i++)r.push([...q.slice(0,i),n-1,...q.slice(i)]);return r}
+function viewPerm(){return `<div class="row"><label>Permutation (one-line, images of 1..n)<input id="p" value="2 3 1 5 4"></label><button class="go" id="b">Analyse</button></div><div id="r"></div>
+<h3>Whole group S<sub>n</sub></h3><div class="row"><label>n (1 to 7)<input id="sn" type="number" min="1" max="7" value="5" style="width:90px"></label><button class="go" id="b2">Split A<sub>n</sub> / odd</button></div><div id="r2"></div>
+<p class="note">Order = lcm of cycle lengths. sign = (−1)<sup>n−c</sup>, c = number of cycles (including fixed points).</p>`+rl("shuffling and sorting (permutations)",`<p><b>Problem.</b> A warehouse conveyor or a card shuffler rearranges n items by a fixed rule. How many repeats bring the items back to the start, and can a sorting mistake be fixed by simple swaps?</p><p><b>Solution with S<sub>n</sub>.</b> The rule is a permutation. Split it into cycles: the number of repeats needed is the lcm of the cycle lengths (the order). Its inverse undoes it. Parity tells whether the rearrangement can be made with an even or odd number of swaps, so an odd arrangement can never be reached by even swaps alone, as in the 15-puzzle.</p>`)}
+function runPerm(){
+ const p=$("#p").value.trim().split(/[\s,]+/).map(Number),n=p.length;
+ const ok=n>=1&&n<=12&&p.every(x=>x>=1&&x<=n)&&new Set(p).size==n;
+ if(!ok){$("#r").innerHTML="<p>Enter each of 1…n exactly once (n ≤ 12), e.g. 2 3 1 5 4.</p>";return}
+ const q=p.map(x=>x-1),cy=cycles(q),s=psign(q),inv=Array(n);q.forEach((x,i)=>inv[x]=i+1);
+ $("#r").innerHTML=kp([[pord(q),"order"],[s>0?"even":"odd","parity (sign "+(s>0?"+1":"−1")+")"]])+
+ `<p>Cycle decomposition: <b>${cy.filter(c=>c.length>1).map(c=>"("+c.join(" ")+")").join("")||"identity"}</b> &nbsp; lengths: ${cy.map(c=>c.length).join(", ")}</p><p>Inverse (one-line): ${inv.join(" ")}</p>`+`<p class="note">Real life: if this is a rule that rearranges ${n} parcels or cards, repeating it ${pord(q)} time${pord(q)>1?"s":""} restores the original order, and its inverse above undoes it in one pass.</p>`}
+function runSn(){
+ const n=+$("#sn").value;if(!(n>=1&&n<=7))return;
+ const P=allPerms(n),ev=P.filter(p=>psign(p)>0).length,h=hist(P.map(pord)),he=hist(P.filter(p=>psign(p)>0).map(pord));
+ $("#r2").innerHTML=kp([[P.length,"|S"+n+"| = n!"],[ev,"even permutations |A"+n+"|"],[P.length-ev,"odd permutations"]])+
+ `<p class="note">${n>1?(ev==P.length/2?"Check: |A<sub>n</sub>| = n!/2 ✓":""):"A<sub>1</sub> = S<sub>1</sub>"}</p><h3>Order histogram of S<sub>${n}</sub></h3>${histHTML(h)}<h3>Order histogram of A<sub>${n}</sub></h3>${histHTML(he)}`}
+
+// ---- Dihedral
+function viewDih(){return `<div class="row"><label>n (3 to 24)<input id="d" type="number" min="3" max="24" value="6" style="width:90px"></label><button class="go" id="b">Build D<sub>n</sub></button></div><div id="r"></div>
+<p class="note">D<sub>n</sub> = ⟨r,s | r<sup>n</sup> = s<sup>2</sup> = e, srs = r<sup>−1</sup>⟩, order 2n. Centre: {e, r<sup>n/2</sup>} if n is even, {e} if n is odd.</p>`+rl("wheels, gears and bolt patterns (D<sub>n</sub>)",`<p><b>Problem.</b> A wheel has n evenly spaced bolts, or a gear has n teeth. A robot must recognise the part whether it arrives turned or flipped over, and a designer wants to know how many different ways it can be mounted.</p><p><b>Solution with D<sub>n</sub>.</b> Turning the part is a rotation r<sup>k</sup>, flipping it is a reflection r<sup>k</sup>s, and together they give 2n mounting positions. Undoing a turn uses the inverse r<sup>n−k</sup>, and a flip is its own inverse. The centre shows which motions commute with all others, such as the half-turn when n is even. The Real life tab applies D<sub>4</sub> to square tiles.</p>`)}
+function runDih(){
+ const n=+$("#d").value;if(!(n>=3&&n<=24)){$("#r").innerHTML="<p>Use n from 3 to 24.</p>";return}
+ const rot=[...Array(n).keys()].map(k=>({nm:k?"r"+(k>1?"<sup>"+k+"</sup>":""):"e",o:n/gcd(n,k),par:psign([...Array(n).keys()].map(i=>(i+k)%n)),inv:k?"r<sup>"+(n-k)+"</sup>":"e"}));
+ const ref=[...Array(n).keys()].map(k=>({nm:"r"+(k?"<sup>"+k+"</sup>":"")+"s",o:2,par:psign([...Array(n).keys()].map(i=>((k-i)%n+n)%n)),inv:"r"+(k?"<sup>"+k+"</sup>":"")+"s"}));
+ const all=[...rot,...ref],nEv=all.filter(x=>x.par>0).length,ctr=n%2?"{e}":"{e, r<sup>"+n/2+"</sup>}";
+ $("#r").innerHTML=kp([[2*n,"|D"+n+"|"],[n,"rotations"],[n,"reflections"],[n%2?1:2,"|Z(D"+n+")|"],[nEv,"even permutations"],[2*n-nEv,"odd permutations"]])+`<p>Centre: <b>${ctr}</b></p><h3>Order histogram</h3>${histHTML(hist(all.map(x=>x.o)))}
+ <h3>Elements</h3><div class="sc"><table><tr><th>element</th><th>type</th><th>order</th><th>inverse</th><th>even / odd</th></tr>${all.map((x,i)=>`<tr><td>${x.nm}</td><td>${i<n?"rotation":"reflection"}</td><td>${x.o}</td><td>${x.inv}</td><td class="${x.par>0?"ev":"od"}">${x.par>0?"even":"odd"}</td></tr>`).join("")}</table></div>
+ <p class="note">Rotation r<sup>k</sup> has order n/gcd(n,k). Every reflection has order 2. Even/odd treats each element as a permutation of the n vertices: r<sup>k</sup> has sign (−1)<sup>n−gcd(n,k)</sup>.</p>`}
+
+const rl=(t,b)=>`<div style="margin-top:18px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--hi);border-radius:6px;background:var(--bg)"><h3 style="margin-top:0">Real-life problem: ${t}</h3>${b}</div>`;
+function viewAll(){return `<p class="note">All four real-life problems in one place, each with its solution. The interactive tile demo is on its own tab.</p><button class="go" id="b" style="display:none" aria-hidden="true" tabindex="-1"></button>`+
+rl("1. Tile inspection (D<sub>4</sub>)",`<p><b>Problem.</b> Square tiles reach the camera in different orientations. A machine vision system has trouble comparing a rotated or reflected tile with its reference design.</p><p><b>Solution.</b> The dihedral group D<sub>4</sub> holds the 4 rotations and 4 reflections of a square. The system tries each of the 8 elements on the tile and looks for a match with the reference. If tile = g(reference), the correction is the inverse g<sup>−1</sup>. If the pattern has its own symmetry, several corrections match, and the number of distinct orientations is 8 divided by the pattern’s symmetries.</p>`)+
+rl("2. Shift ciphers and rotating positions (Z<sub>n</sub>)",`<p><b>Problem.</b> A message must be encrypted by shifting letters. A rotating sprinkler or camera must also step through n positions without missing any.</p><p><b>Solution.</b> Letters are the elements of Z<sub>26</sub>. Encrypting with key k adds k mod 26, and decrypting adds the inverse 26 − k. For example, HELLO with k = 3 becomes KHOOR, and k = 23 undoes it. A device stepping k positions around n positions visits every one exactly when gcd(k, n) = 1, so only the φ(n) generators of Z<sub>n</sub> are good step sizes.</p>`)+
+rl("3. Shuffling and sorting (permutations, S<sub>n</sub>)",`<p><b>Problem.</b> A warehouse conveyor or card shuffler rearranges n items by a fixed rule. How many repeats bring the items back to the start, and can a mistake be fixed by simple swaps?</p><p><b>Solution.</b> The rule is a permutation. Split it into cycles, and the number of repeats needed is the lcm of the cycle lengths (its order). The inverse permutation undoes the rule in one pass. Parity tells whether the arrangement needs an even or odd number of swaps. An odd arrangement can never be reached by even swaps alone, as in the 15-puzzle.</p>`)+
+rl("4. Wheels, gears and bolt patterns (D<sub>n</sub>)",`<p><b>Problem.</b> A wheel has n evenly spaced bolts, or a gear has n teeth. A robot must recognise the part whether it arrives turned or flipped, and a designer wants to know how many ways it can be mounted.</p><p><b>Solution.</b> A turn is a rotation r<sup>k</sup> and a flip is a reflection r<sup>k</sup>s, which together give 2n mounting positions. A turn is undone by the inverse r<sup>n−k</sup>, and a flip is its own inverse. The centre shows which motions commute with all others, such as the half-turn when n is even.</p>`)+
+rl("How to solve them: worked examples",`<p>Method: write the situation as a group element, then use its inverse, its order or a match test.</p>
+<h3>1. Tile (D<sub>4</sub>)</h3><ol><li>Take the 2×2 reference [[A, B], [C, D]].</li><li>The camera sees [[C, A], [D, B]], which is the reference turned 90° clockwise (r).</li><li>The system applies all 8 elements of D<sub>4</sub> to the camera image and compares each result with the reference.</li><li>r<sup>3</sup> gives [[A, B], [C, D]], a match. Since r<sup>3</sup> = r<sup>−1</sup>, the correction is the inverse of the turn.</li><li>If the tile were a reflection r<sup>k</sup>s, the correction is r<sup>k</sup>s itself.</li></ol>
+<h3>2. Cipher and stepping (Z<sub>n</sub>)</h3><ol><li>Encrypt HELLO with k = 3: add 3 to each letter number mod 26 to get KHOOR.</li><li>Decrypt by adding the inverse 26 − 3 = 23. K (10) + 23 = 33, and 33 mod 26 = 7, which is H.</li><li>Stepping device with 12 positions and step 5: gcd(5, 12) = 1, so it visits all 12.</li><li>Step 4: gcd(4, 12) = 4, so it only visits 0, 4 and 8. Pick k from the generators of Z<sub>n</sub>.</li></ol>
+<h3>3. Shuffle (S<sub>n</sub>)</h3><ol><li>Write the rule in one line: 2 3 1 5 4.</li><li>Cycles: (1 2 3)(4 5), with lengths 3 and 2.</li><li>Repeats to restore the order: lcm(3, 2) = 6.</li><li>Inverse, which undoes it in one pass: 3 1 2 5 4.</li><li>Parity: n − c = 5 − 2 = 3, which is odd, so it needs an odd number of swaps.</li></ol>
+<h3>4. Wheel (D<sub>n</sub>)</h3><ol><li>A 5-bolt wheel has symmetry group D<sub>5</sub> with 2 × 5 = 10 elements.</li><li>If it arrives turned by 2 bolt positions (r<sup>2</sup>), the correction is r<sup>5−2</sup> = r<sup>3</sup>.</li><li>If it arrives flipped as rs, the correction is rs again.</li><li>For a 6-bolt wheel, the half-turn r<sup>3</sup> commutes with every motion, so it is the centre of D<sub>6</sub>.</li></ol>`)}
+function runReport(){
+ let h="";const bad=t=>`<p>${t}</p>`;
+ const n=+$("#r1").value;
+ if(n>=1&&n<=2000){const [g]=classify(n);h+=`<p><b>1.</b> Order ${n}: <b>${g.length}</b> abelian group structure${g.length>1?"s":""}: ${g.map(x=>tex(x.ed)).join("; ")}.</p>`}else h+=bad("<b>1.</b> Use n from 1 to 2000.");
+ const m=$("#r2").value.trim().split(/\s+/).map(Number).filter(x=>x>=1),N=m.reduce((a,b)=>a*b,1);
+ if(m.length&&N<=4000){let els=[[]];for(const mi of m)els=els.flatMap(e=>[...Array(mi).keys()].map(x=>[...e,x]));const mx=Math.max(...els.map(e=>e.reduce((o,x,i)=>lcm(o,m[i]/gcd(m[i],x)),1)));h+=`<p><b>2.</b> ${tex(m)}: <b>${N}</b> elements, largest element order <b>${mx}</b>, <b>${mx==N?"cyclic":"non-cyclic"}</b>.</p>`}else h+=bad("<b>2.</b> Use positive moduli with total order ≤ 4000.");
+ const p=$("#r3").value.trim().split(/[\s,]+/).map(Number),pn=p.length;
+ if(pn>=1&&pn<=12&&p.every(x=>x>=1&&x<=pn)&&new Set(p).size==pn){const q=p.map(x=>x-1),cy=cycles(q).filter(c=>c.length>1).map(c=>"("+c.join(" ")+")").join("")||"identity";h+=`<p><b>3.</b> σ = <b>${cy}</b>, order <b>${pord(q)}</b>, ${psign(q)>0?"even":"odd"} permutation.</p>`}else h+=bad("<b>3.</b> Enter each of 1…n exactly once (n ≤ 12).");
+ const d=+$("#r4").value;
+ if(d>=3&&d<=24)h+=`<p><b>4.</b> D<sub>${d}</sub>: <b>${2*d}</b> symmetries, <b>${d}</b> rotations and <b>${d}</b> reflections.</p>`;else h+=bad("<b>4.</b> Use n from 3 to 24.");
+ $("#r").innerHTML=h}
+function viewReport(){return `<h3>Practical website demonstration (live: change the values)</h3><div class="row"><label>1. Order n<input id="r1" type="number" min="1" max="2000" value="8" style="width:90px"></label><label>2. Moduli<input id="r2" value="2 2" style="width:110px"></label><label>3. Permutation<input id="r3" value="2 3 1 4" style="width:130px"></label><label>4. Dihedral n<input id="r4" type="number" min="3" max="24" value="4" style="width:90px"></label><button class="go" id="b">Run demonstration</button></div><div id="r"></div><p class="note">Defaults reproduce the expected results below. Change any value and press Run (or Enter).</p>
+<h3>Fixed example (default values)</h3><ol>
+<li><b>Abelian Classifier:</b> enter 8, click Classify. Expected: 3 abelian group structures.</li>
+<li><b>Product Group Builder:</b> enter "2 2", click Build group. Expected: 4 elements, largest element order 2, non-cyclic.</li>
+<li><b>Permutations S<sub>n</sub>:</b> enter "2 3 1 4", click Analyse. Expected: σ = (1 2 3), order 3.</li>
+<li><b>Dihedral D<sub>n</sub>:</b> enter 4, click Build D<sub>n</sub>. Expected: 8 symmetries, 4 rotations and 4 reflections.</li></ol>
+<h3>Expected benefits of the proposed solution</h3><ol>
+<li><b>Improved pattern comparison:</b> mathematical transformations help represent equivalent tile orientations.</li>
+<li><b>Reduced orientation confusion:</b> rotations and reflections can be modeled systematically.</li>
+<li><b>Better understanding of symmetry:</b> the inspection process can use a mathematical description of square symmetry.</li>
+<li><b>Organized design analysis:</b> permutations represent rearrangements of design elements.</li>
+<li><b>Mathematical accuracy:</b> group operations provide a consistent framework for analyzing transformations.</li></ol>
+<p class="note">These are expected benefits of a proposed system. Actual defect detection would also require image-processing software, a camera, and a comparison algorithm.</p>
+<h3>Limitations</h3><ul>
+<li>Group theory alone cannot detect physical cracks or damaged tiles.</li>
+<li>A camera-based recognition system is needed for real image inspection.</li>
+<li>Not every reflected design should be considered acceptable.</li>
+<li>Some tile designs have less symmetry than a square itself.</li>
+<li>The Group Explorer demonstrates mathematical calculations rather than controlling factory equipment.</li></ul>
+<h3>Future improvements</h3><ul>
+<li>Camera-based tile image capture.</li><li>Automatic rotation recognition.</li><li>Image comparison with reference patterns.</li><li>Defect classification using computer vision.</li><li>A dashboard showing inspection results.</li></ul>
+<h3>Conclusion</h3>
+<p>The tile manufacturing problem demonstrates a practical connection between Abstract Algebra and industrial quality inspection.</p>
+<p>Group Theory provides mathematical tools for studying the transformations of square tiles. The Dihedral Group (D<sub>4</sub>) represents rotations and reflections, Permutation Groups represent rearrangements of design elements, Abelian Groups represent commutative operations, and Product Groups represent combinations of mathematical structures.</p>
+<p>Our Group Explorer makes these concepts interactive by calculating group orders, element orders, inverses, generators, permutations, and symmetries.</p>
+<p>Although the current artifact is a mathematical exploration tool rather than a complete industrial inspection system, it provides the mathematical foundation for understanding symmetry-based pattern recognition.</p>
+<p>The main objective is to demonstrate how abstract mathematical concepts can help solve practical engineering and computer science problems.</p>`}
+// ---- Real-life: tile inspection with D4
+let PAT=[[1,2,0],[0,1,0],[0,3,3]];
+const COL=["var(--bg)","#2f3fa8","#b45f06","#1b7a4b"];
+const rotG=g=>g.map((r,i)=>r.map((_,j)=>g[g.length-1-j][i]));
+const flipG=g=>g.map(r=>[...r].reverse());
+function app(k,f,g){if(f)g=flipG(g);for(let i=0;i<k;i++)g=rotG(g);return g}
+const dn=(k,f)=>(k?"r"+(k>1?"<sup>"+k+"</sup>":""):"")+(f?"s":"")||"e";
+const dp=(k,f)=>(k?"r"+(k>1?"^"+k:""):"")+(f?"s":"")||"e";
+const dinv=(k,f)=>f?[k,1]:[(4-k)%4,0];
+const same=(a,b)=>JSON.stringify(a)==JSON.stringify(b);
+function svg(g,s=84){const n=g.length,c=s/n;return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" role="img" aria-label="tile pattern" style="border:1px solid var(--bd)">`+g.map((r,i)=>r.map((v,j)=>`<rect x="${j*c}" y="${i*c}" width="${c}" height="${c}" fill="${COL[v]}" stroke="var(--bd)" stroke-width=".5"/>`).join("")).join("")+`</svg>`}
+const ALL=[];for(const f of[0,1])for(let k=0;k<4;k++)ALL.push([k,f]);
+function viewTile(){return `<h3>Real-life problem</h3><p>In tile manufacturing, square tiles reach the camera in different orientations. A machine vision system has trouble comparing a rotated or reflected tile with its reference design.</p>
+<h3>Solution with group theory</h3><p>The dihedral group D<sub>4</sub> holds the 4 rotations and 4 reflections of a square. The system tries each element on the tile and checks for a match with the reference. If tile = g(reference), the correction is the inverse g<sup>−1</sup>.</p>
+<div class="row"><label>Orientation of the tile on the line<select id="g" style="font:1rem system-ui;padding:7px;border:1px solid var(--bd);border-radius:5px;background:var(--bg);color:var(--tx)">${ALL.map(([k,f],i)=>`<option value="${i}"${i==5?" selected":""}>${dp(k,f)}</option>`).join("")}</select></label><button class="go" id="b">Inspect tile</button></div><div id="r"></div>
+<p class="note">Convention: r<sup>k</sup>s means reflect left–right first, then rotate 90° clockwise k times. This links to the Dihedral tab: each r<sup>k</sup>s has order 2, so it is its own inverse, while r<sup>k</sup> has inverse r<sup>4−k</sup>.</p>`}
+function runTile(){
+ const [k,f]=ALL[+$("#g").value],tile=app(k,f,PAT),[ik,iF]=dinv(k,f);
+ const fix=ALL.filter(([a,b])=>same(app(a,b,tile),PAT));
+ const orb=new Set(ALL.map(([a,b])=>JSON.stringify(app(a,b,PAT)))).size;
+ $("#r").innerHTML=`<h3>1. Reference design (click a cell to recolour)</h3><div style="display:grid;grid-template-columns:repeat(3,56px);gap:2px">${PAT.map((r,i)=>r.map((v,j)=>`<button class="cell" data-i="${i}" data-j="${j}" aria-label="cell ${i+1},${j+1}" style="width:56px;height:56px;border:1px solid var(--bd);background:${COL[v]};cursor:pointer"></button>`).join("")).join("")}</div>`+
+ `<h3>2. Camera sees ${dn(k,f)}(reference); the system applies ${dn(ik,iF)}</h3><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">${svg(PAT)}<span>${dn(k,f)} →</span>${svg(tile)}<span>${dn(ik,iF)} →</span>${svg(app(ik,iF,tile))}</div>`+
+ kp([[dn(ik,iF),"correction g⁻¹"],[fix.length,"corrections that match"],[orb,"distinct orientations (of 8)"]])+
+ `<p>Matching transformations: ${fix.map(([a,b])=>dn(a,b)).join(", ")}. ${fix.length==1?"The pattern has no symmetry, so the correction is unique.":"The pattern has symmetry, so several corrections work."}</p>`+
+ `<h3>All 8 orientations of the reference</h3><div style="display:flex;gap:10px;flex-wrap:wrap">${ALL.map(([a,b])=>`<div style="text-align:center;font:.8rem ui-monospace,monospace">${svg(app(a,b,PAT),72)}<br>${dn(a,b)}</div>`).join("")}</div>`+
+ `<p class="note">Orbit–stabiliser: distinct orientations = 8 ÷ (symmetries of the pattern) = ${orb}. Try colouring all cells the same.</p>`;
+ document.querySelectorAll(".cell").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,j=+b.dataset.j;PAT[i][j]=(PAT[i][j]+1)%4;runTile()})}
+
+const G=[
+["ℤ, ℚ, ℝ, ℂ","Number groups under addition",0,"ab","∞","+","2.6","Identity 0, inverse −a. Chain of subgroups ℤ &lt; ℚ &lt; ℝ &lt; ℂ.",-1],
+["nℤ","Multiples of n",0,"ab","∞","+","6.7","Every subgroup of ℤ is nℤ for some n, and nℤ ≅ ℤ.",-1],
+["ℚ⁺, ℝ⁺; ℚ*, ℝ*, ℂ*","Positive / nonzero numbers",0,"ab","∞","ordinary multiplication","2.8","0 is left out because it has no inverse, so (ℝ, ·) is not a group.",-1],
+["ℝⁿ, M<sub>m×n</sub>(ℝ)","Vectors and matrices",0,"ab","∞","componentwise addition","2.10, 2.11","A vector space is an abelian group under vector addition; the zero vector or matrix is the identity.",-1],
+["F(ℝ)","Real functions on ℝ",0,"ab","∞","function addition","2.9","(f+g)(x) = f(x)+g(x); the identity is the zero function.",-1],
+["(ℚ⁺, ∗)","Twisted rationals",0,"ab","∞","a∗b = ab/2","2.15","Identity 2, inverse of a is 4/a. Shows unusual rules can still give a group.",-1],
+["ℤ<sub>n</sub>","Integers mod n",1,"ab","n","addition mod n","3","Cyclic. Generators are the k with gcd(k, n) = 1 (φ(n) of them); subgroup orders divide n.",2],
+["U<sub>n</sub>","nth roots of unity",1,"ab","n","complex multiplication","3, 5.5","The numbers e<sup>2πik/n</sup>. Isomorphic to ℤ<sub>n</sub> via k ↔ ζ<sup>k</sup>.",2],
+["U","Circle group",0,"ab","∞","multiplication of |z| = 1","3.14","Multiplying adds angles, so U ≅ ℝ<sub>2π</sub>.",-1],
+["ℝ<sub>c</sub>","Reals mod c",0,"ab","∞","addition mod c on [0, c)","3","Inverse of a ≠ 0 is c − a. Every ℝ<sub>c</sub> is isomorphic to U.",-1],
+["V (K<sub>4</sub>)","Klein 4-group",1,"ab","4","e, a, b, c with a² = b² = c² = e","3.2, 5.7","Not cyclic (no element of order 4). ≅ ℤ₂ × ℤ₂ and fits as D₂. Three subgroups of order 2.",3],
+["U(n)","Euler group of units (ℤ/nℤ)×",1,"ab","φ(n)","multiplication mod n","20","Residues a with gcd(a, n) = 1. Order is Euler’s φ(n); Euler’s theorem is Lagrange’s theorem. Cyclic iff n = 1, 2, 4, p<sup>k</sup>, 2p<sup>k</sup>.",6],
+["Q<sub>8</sub>","Quaternion group",1,"non","8","quaternion multiplication","21.7, 32.9, 21 Ex. 3","⟨a, b | a⁴ = 1, b² = a², ba = a³b⟩ = {±1, ±i, ±j, ±k} with i² = j² = k² = ijk = −1. Nonabelian; all elements except 1 and a² have order 4 (the octic group D₄ has only two). A subgroup of the nonzero quaternions ℍ*.",6,["#og","Q8","#b2"]],
+["Z(G)","Center of a group",1,"ab","|Z(G)|","as in G","15, 16","All elements commuting with every element of G. Normal and abelian. G/Z(G) cyclic ⇒ G abelian. Z(D<sub>n</sub>) = {e, ρⁿ/²} for even n.",-1],
+["Aut(G), Inn(G)","Automorphism groups",1,"both","varies","composition","14, 15","Inn(G) ≅ G/Z(G) is normal in Aut(G). Aut(ℤ<sub>n</sub>) ≅ U(n), the Euler group.",6],
+["F[A]","Free group on A",0,"non","∞","concatenate and reduce","39","Reduced words in A ∪ A⁻¹. F[{a}] ≅ ℤ, and F with two or more generators is nonabelian. Subgroups of free groups are free.",-1],
+["ℤʳ","Free abelian group of rank r",0,"ab","∞","componentwise addition","38","Has a basis of r elements. Every finitely generated abelian group is ℤʳ × finite.",-1],
+["⟨A | R⟩","Group given by a presentation",1,"both","varies","words modulo relators","40","F[A]/N, N the normal closure of R. ℤ<sub>n</sub>, D<sub>n</sub> and Q₈ = ⟨i, j | i⁴, i² = j², jij⁻¹ = i⁻¹⟩ are presented this way.",-1],
+["Sylow p-subgroup","Maximal p-subgroup",1,"both","pᵏ","as in G","36, 37","Exists, all conjugate, and n<sub>p</sub> ≡ 1 (mod p). Open the Sylow tab to see the possible n<sub>p</sub>.",7],
+["Solvable groups","Series with abelian factors",1,"both","any","as in G","35","Abelian, p-groups, S₃, S₄ are solvable; A<sub>n</sub> and S<sub>n</sub> for n ≥ 5 are not. Composition factors of a solvable group are ℤ<sub>p</sub>.",7],
+["ℤ<sub>m</sub> × ℤ<sub>n</sub>","Finite direct products",1,"ab","m·n","componentwise","9","Cyclic iff gcd(m, n) = 1, then ≅ ℤ<sub>mn</sub>. Order of (a, b) is the lcm of the component orders.",3],
+["Finite abelian groups","Fundamental theorem",1,"ab","any n","direct products of ℤ<sub>d</sub>","9.12, 9.14","Every one is a product of cyclic groups of prime-power order, or of invariant factors d₁ | d₂ | …",2],
+["S<sub>n</sub>","Symmetric group",1,"both","n!","composition (right to left)","4","Abelian only for n ≤ 2. S₃ is the smallest nonabelian group. S<sub>A</sub> exists for any set A.",4],
+["A<sub>n</sub>","Alternating group",1,"both","n!/2","composition","8.25","Even permutations, the kernel of sgn. A₄ has no subgroup of order 6.",4],
+["D<sub>n</sub>","Dihedral group (n ≥ 3)",1,"non","2n","composition of symmetries of a regular n-gon","4","Elements ρ<sup>k</sup> and μρ<sup>k</sup>, with ρ<sup>n</sup> = μ² = ι and ρμ = μρ<sup>n−1</sup>. D₃ ≅ S₃.",5],
+["GL(n, ℝ)","General linear group",0,"both","∞","matrix multiplication","2.14","Invertible n×n matrices (det ≠ 0). Abelian only for n = 1.",-1],
+["SL(n, ℝ)","Special linear group",0,"both","∞","matrix multiplication","12.6","Matrices with det = 1, the kernel of det, so normal in GL(n, ℝ).",-1],
+["T","Isometries of the plane",0,"non","∞","composition","2.13, 11","Translations, rotations, reflections. A finite group of isometries is V, ℤ<sub>n</sub> or D<sub>n</sub> (Thm 11.5).",8],
+["G/H","Factor (quotient) groups",1,"both","|G|/|H|","(aH)(bH) = (ab)H","12","H must be normal. ℤ/nℤ ≅ ℤ<sub>n</sub>; a factor group of an abelian group is abelian.",-1],
+["Simple groups","e.g. ℤ<sub>p</sub>, A<sub>n</sub> (n ≥ 5)",1,"both","p, n!/2","as in the group","13","No proper nontrivial normal subgroup. A₅ has order 60.",4],
+// ---- added: further groups that occur in the book
+["{e}","Trivial group",1,"ab","1","any","3.1, 5.2","One element, the identity: ℤ<sub>1</sub> = {0}. It is the trivial subgroup of every group.",-1],
+["ℤ × ℤ, ℤʳ","Free abelian groups",0,"ab","∞","componentwise addition","19.3, 19.4, 19.10","{(1,0), (0,1)} is a basis of ℤ × ℤ, and so is {(1,0), (4,1)}. ℤ<sub>n</sub> is not free abelian. A subgroup of ℤʳ is free abelian of rank ≤ r.",-1],
+["ℤ × ℤ<sub>2</sub>","Infinite abelian group with torsion",0,"ab","∞","componentwise","9.11, 9.12","Generated by (1,0) and (0,1). By the fundamental theorem a finitely generated abelian group is ℤʳ × (finite). It is not free abelian, since (0,1) has order 2.",3,["#m","2 2","#b"]],
+["F[A]","Free group on a set A",0,"both","∞","juxtaposition, then cancellation","20.1–20.6, 20.11","Reduced words in the letters aᵢ^±1. F[{a}] ≅ ℤ; with two or more letters F[A] is nonabelian. Example reduced form: a₂²a₃a₁⁻⁵ (20.2).",-1],
+["⟨A | R⟩","Groups given by a presentation",1,"both","any","words modulo the relators","21.1–21.7","ℤ<sub>n</sub> = ⟨a | aⁿ⟩, ℤ × ℤ = ⟨x, y | xy = yx⟩, D<sub>n</sub> = ⟨ρ, μ | ρⁿ, μ², ρμ = μρ⁻¹⟩, and the quaternion group. A relation ba = aᵏb defines a group of order 2n only when k² ≡ 1 (mod n).",-1],
+["Groups of order 8","The five groups of order 8",1,"both","8","—","21.7, 9.12","Abelian: ℤ₈, ℤ₄ × ℤ₂, ℤ₂ × ℤ₂ × ℤ₂. Nonabelian: the octic group D₄ = ⟨a, b | a⁴ = b² = 1, ba = a³b⟩ and the quaternion group ⟨a, b | a⁴ = 1, b² = a², ba = a³b⟩.",6,["#og","Q8","#b2"]],
+["Groups of order 10","ℤ₁₀ and D₅",1,"both","10","—","21.6, 17","Abelian: ℤ₁₀. Nonabelian: ⟨a, b | a⁵ = b² = 1, ba = a⁴b⟩ = D₅. The presentations with ba = a²b or ba = a³b collapse to ℤ₂ because 2² ≢ 1 and 3² ≢ 1 (mod 5).",5,["#d","5","#b"]],
+["Groups of order 14","ℤ₁₄ and D₇",1,"both","14","—","21 Ex. 4","Same method as for order 10: one abelian group ℤ₁₄ and one nonabelian group D₇.",5,["#d","7","#b"]],
+["Groups of order 15","Only ℤ₁₅",1,"ab","15","—","17.10, 17.11","If |G| = pq with p < q and p ∤ q − 1, G is cyclic. Here 3 ∤ 4. 15 is the smallest composite n for which every group of order n is cyclic.",7,["#sn2","15","#b"]],
+["Groups of order 21","ℤ₂₁ and ℤ₇ ⋊ ℤ₃",1,"both","21","—","21 Ex. 5, 17.10","The nonabelian group ⟨a, b | a⁷ = b³ = 1, ba = a²b⟩ exists because 3 | 7 − 1 (2³ ≡ 1 mod 7). The two possible presentations give isomorphic groups.",6,["#og","Z7Z3","#b2"]],
+["Groups of order p²","ℤ<sub>p²</sub> and ℤ<sub>p</sub> × ℤ<sub>p</sub>",1,"ab","p²","—","14.26","Every group of order p² is abelian. Order 4: ℤ₄ and V. Order 9: ℤ₉ and ℤ₃ × ℤ₃.",2,["#n","9","#b"]],
+["p-groups","Orders are powers of p",1,"both","pⁿ","as in G","14.21–14.23","Every element has order a power of p. D₁₆ is a 2-group (order 32). A finite abelian p-group is a product of ℤ<sub>pᵃ</sub>. A p-group has a nontrivial center.",7],
+["Cube rotations","Group of 24 rotations of a cube",1,"non","24","composition of rotations","15.3, 11 Ex. 41","Isomorphic to S₄, since a rotation permutes the 4 diagonals of the cube. Acting on the 720 face markings it gives 720/24 = 30 distinguishable dice.",6,["#og","Cube","#b2"]],
+["A<sub>5</sub>","Smallest nonabelian simple group",1,"non","60","composition of even permutations","13, 49","Simple, so it has no proper nontrivial normal subgroup. It is not solvable, which is the source of the insolvability of the quintic.",6,["#og","A5","#b2"]],
+["O(n)","Orthogonal matrices",0,"both","∞","matrix multiplication","5 Ex. 13","Real n×n matrices with AᵀA = Iₙ. A subgroup of GL(n, ℝ), abelian only for n = 1.",-1],
+["ℍ*","Nonzero quaternions",0,"non","∞","quaternion multiplication","32.9, 32 Ex. 9","a + bi + cj + dk ≠ 0. ℍ is a skew field, so ℍ* is a group. It contains Q₈ = {±1, ±i, ±j, ±k}; its center is the nonzero real quaternions.",6,["#og","Q8","#b2"]],
+["(R, +)","Additive group of a ring",1,"ab","|R|","ring addition","22.1–22.4, 22.13, 32.2","Every ring is an abelian group under +: ℤ<sub>n</sub>, ℤ × ℤ, F[x], M<sub>n</sub>(ℝ), ℝ^ℝ. ℤ and 2ℤ are isomorphic as additive groups but not as rings.",-1],
+["ℤ-modules","Abelian groups as ℤ-modules",1,"ab","any","n·x = x + … + x","33.23, 33.25","Every abelian group is a ℤ-module. ℤ₃ has no linearly independent subset, so it has no basis.",-1],
+["U(R)","Group of units of a ring",1,"both","varies","ring multiplication","22.16, 22.17","Elements with a multiplicative inverse. U(ℤ₁₄) = {1, 3, 5, 9, 11, 13} has order 6. In a field every nonzero element is a unit. U(n) is the case R = ℤ<sub>n</sub>.",6,["#en","14","#b"]],
+["F*","Nonzero elements of a field",1,"ab","|F| − 1","field multiplication","22.18, 42.5, 42.7","For a finite field the group F* is cyclic (Theorem 42.5). Example: ℤ₁₁* has order 10 and a generator is a primitive root.",6,["#en","11","#b"]],
+["Aut(E)","Automorphisms of a field",1,"both","varies","composition","43.2, 43.3","The automorphisms of a field E form a group under composition. Every automorphism of a field of characteristic 0 fixes ℚ.",-1],
+["G(K/F)","Galois group of an extension",1,"both","|G| ≤ [K : F]","composition","43.12, 43.15, 46.6, 46.8","Automorphisms of K that fix F. For a normal extension, subgroups correspond to intermediate fields (Galois correspondence), and normal subgroups to normal extensions.",-1],
+["G(ℚ(√2, √3)/ℚ)","Galois group isomorphic to V",1,"ab","4","composition","43.4, 43.5","√2 ↦ ±√2 and √3 ↦ ±√3 give four automorphisms, all of order ≤ 2, so the group is the Klein 4-group.",3,["#m","2 2","#b"]],
+["G(ℚ(∛2)/ℚ)","Trivial Galois group",1,"ab","1","composition","43.14","x³ − 2 has only one real zero, so the only automorphism of ℚ(∛2) is the identity.",-1],
+["G(K/ℚ), x³ − 2","Galois group isomorphic to S₃",1,"non","6","composition","46.7, 46.9, 46.11","K is the splitting field of x³ − 2. Each automorphism permutes the 3 zeros, giving G(K/ℚ) ≅ S₃. Complex conjugation is the transposition (2 3).",6,["#og","S3","#b2"]],
+["G(ℚ(ζ<sub>n</sub>)/ℚ)","Cyclotomic Galois group ≅ U(n)",1,"ab","φ(n)","composition","48.4, 48.5","The nth cyclotomic extension of ℚ has Galois group with φ(n) elements, isomorphic to the units mod n. For n = 8 (splitting field of x⁴ + 1) it is U(8) ≅ V.",6,["#en","8","#b"]],
+["G(GF(pⁿ)/ℤ<sub>p</sub>)","Galois group of a finite field",1,"ab","n","composition","45 Ex. 11, 43 Ex. 35","Cyclic of order n, generated by the Frobenius automorphism α ↦ αᵖ.",-1],
+["S<sub>5</sub> as Galois group","Galois group of 2x⁵ − 5x⁴ + 5",1,"non","120","composition","49.5","A subgroup of S₅ that has a transposition and a 5-cycle is all of S₅. S₅ is not solvable, so this polynomial is not solvable by radicals.",4],
+// ---- added: individual named groups (cyclic, abelian products, dihedral, permutation, by order)
+["ℤ","Integers (infinite cyclic group)",0,"ab","∞","+","6","Generated by 1 (and by −1), so ℤ = ⟨1⟩. Every infinite cyclic group is isomorphic to ℤ.",-1,null,"cyc num"],
+["ℤ<sub>2</sub>","Group of order 2",1,"ab","2","addition mod 2","3","{0, 1} with 1 + 1 = 0; also {1, −1} under multiplication. Every group of order 2 is isomorphic to it.",2,["#n","2","#b"],"cyc"],
+["ℤ<sub>3</sub>","Group of order 3",1,"ab","3","addition mod 3","3","Generated by 1 or by 2. Every group of order 3 is isomorphic to it.",2,["#n","3","#b"],"cyc"],
+["ℤ<sub>4</sub>","Cyclic group of order 4",1,"ab","4","addition mod 4","3","Generators 1 and 3; subgroups {0}, {0, 2}, ℤ₄. One of the two groups of order 4 (the other is V).",2,["#n","4","#b"],"cyc"],
+["ℤ<sub>6</sub>","Cyclic group of order 6",1,"ab","6","addition mod 6","3","Generators 1 and 5. ≅ ℤ₂ × ℤ₃ because gcd(2, 3) = 1. One of the two groups of order 6 (the other is S₃).",2,["#n","6","#b"],"cyc"],
+["ℤ<sub>8</sub>","Cyclic group of order 8",1,"ab","8","addition mod 8","3","Generators 1, 3, 5, 7 (φ(8) = 4). One of the three abelian groups of order 8.",2,["#n","8","#b"],"cyc"],
+["ℤ<sub>12</sub>","Cyclic group of order 12",1,"ab","12","addition mod 12","3","Generators 1, 5, 7, 11. ≅ ℤ₃ × ℤ₄. Subgroup orders 1, 2, 3, 4, 6, 12.",2,["#n","12","#b"],"cyc"],
+["ℤ<sub>p</sub> (p prime)","Group of prime order",1,"ab","p","addition mod p","10","Every group of prime order is cyclic, ≅ ℤ<sub>p</sub>. It has no proper nontrivial subgroup, so it is simple.",2,["#n","7","#b"],"cyc"],
+["ℤ<sub>2</sub> × ℤ<sub>3</sub>","Product of coprime cyclic groups",1,"ab","6","componentwise","9","gcd(2, 3) = 1, so it is cyclic and ≅ ℤ₆; (1, 1) is a generator.",3,["#m","2 3","#b"],"prod cyc"],
+["ℤ<sub>4</sub> × ℤ<sub>2</sub>","Abelian group of order 8",1,"ab","8","componentwise","9","Not cyclic (largest element order is 4). One of the three abelian groups of order 8.",3,["#m","4 2","#b"],"prod"],
+["ℤ<sub>2</sub> × ℤ<sub>2</sub> × ℤ<sub>2</sub>","Abelian group of order 8",1,"ab","8","componentwise","9","Every non-identity element has order 2. Not cyclic.",3,["#m","2 2 2","#b"],"prod"],
+["ℤ<sub>3</sub> × ℤ<sub>3</sub>","Abelian group of order 9",1,"ab","9","componentwise","9","Not cyclic (every non-identity element has order 3). With ℤ₉ these are the groups of order 9.",3,["#m","3 3","#b"],"prod"],
+["U(p), p prime","Units mod a prime",1,"ab","p − 1","multiplication mod p","42.5","Always cyclic (a primitive root exists). U(7) ≅ ℤ₆ and U(11) ≅ ℤ₁₀.",6,["#en","7","#b"],"cyc unit"],
+["D<sub>3</sub>","Symmetries of an equilateral triangle",1,"non","6","composition","4","≅ S₃, the smallest nonabelian group. Three rotations ι, ρ, ρ² and three reflections.",5,["#d","3","#b"],"dih perm"],
+["D<sub>4</sub>","Octic group: symmetries of a square",1,"non","8","composition","4","Centre {ι, ρ²}. Not isomorphic to Q₈ (D₄ has five elements of order 2, Q₈ has only one).",5,["#d","4","#b"],"dih perm"],
+["D<sub>5</sub>","Symmetries of a regular pentagon",1,"non","10","composition","4","Five rotations and five reflections; trivial centre (n odd). The nonabelian group of order 10.",5,["#d","5","#b"],"dih perm"],
+["D<sub>6</sub>","Symmetries of a regular hexagon",1,"non","12","composition","4","Centre {ι, ρ³}. ≅ S₃ × ℤ₂.",5,["#d","6","#b"],"dih perm"],
+["S<sub>3</sub>","Symmetric group on 3 letters",1,"non","6","composition","4, 8","Smallest nonabelian group, ≅ D₃. Subgroups: A₃ ≅ ℤ₃ (normal) and three of order 2.",6,["#og","S3","#b2"],"perm dih"],
+["S<sub>4</sub>","Symmetric group on 4 letters",1,"non","24","composition","8","Solvable. Contains A₄ ⊳ V. ≅ rotations of a cube.",6,["#og","S4","#b2"],"perm"],
+["A<sub>4</sub>","Alternating group on 4 letters",1,"non","12","composition","8, 13","Has no subgroup of order 6. Contains V as a normal subgroup. ≅ rotations of a regular tetrahedron.",6,["#og","A4","#b2"],"perm"],
+["Groups of order 4","ℤ₄ and V",1,"ab","4","—","5.7, 14.26","Both abelian: cyclic ℤ₄ and the Klein 4-group V ≅ ℤ₂ × ℤ₂. V has no element of order 4.",2,["#n","4","#b"],"ord"],
+["Groups of order 6","ℤ₆ and S₃",1,"both","6","—","4, 10","One abelian group ℤ₆ (cyclic) and one nonabelian group S₃ ≅ D₃.",5,["#d","3","#b"],"ord"],
+["Groups of order 2p","ℤ<sub>2p</sub> and D<sub>p</sub> (p odd prime)",1,"both","2p","—","21.6","Orders 6, 10, 14: exactly two groups each, one cyclic and one dihedral.",5,["#d","5","#b"],"ord"]
+];
+const D=[
+["Binary operation","A rule that combines two elements of a set S and gives an element of S.","1"],
+["Group","A set G with an associative operation, an identity e (ex = xe = x), and an inverse a′ for every a (aa′ = a′a = e).","2.1"],
+["Abelian group","A group whose operation is commutative.","2.3"],
+["Isomorphism","A one-to-one onto map f: G₁ → G₂ with f(ab) = f(a)f(b). Isomorphic groups have the same structure.","2.22"],
+["Group table rule","In a group table every element appears exactly once in each row and each column, and e appears in every row and column.","2"],
+["Cancellation, uniqueness","ab = ac ⇒ b = c. The identity and each inverse are unique, (ab)⁻¹ = b⁻¹a⁻¹, and ax = b has the unique solution x = a⁻¹b.","2.16–2.19"],
+["Order of a group","The number of elements of G, written |G|.","4.3"],
+["Order of an element","The least n &gt; 0 with aⁿ = e (infinite if none). It equals |⟨a⟩| and divides |G| for finite G.","6, 10.9"],
+["Subgroup","A subset H of G that is itself a group under the operation of G. {e} is trivial, G is improper.","5.1, 5.2"],
+["Subgroup test","H ≤ G iff H is closed, contains e, and contains a⁻¹ for each a ∈ H. A finite nonempty closed subset is a subgroup.","5.12, 5.16"],
+["Cyclic subgroup, generator","⟨a⟩ = {aⁿ : n ∈ ℤ} is the smallest subgroup containing a. G is cyclic if G = ⟨a⟩ for some a.","5.20, 5.22"],
+["Cyclic group facts","Cyclic ⇒ abelian. Subgroups of cyclic groups are cyclic. Infinite cyclic ≅ ℤ; order n ≅ ℤ<sub>n</sub>. Generators are aʳ with gcd(r, n) = 1.","6.1–6.17"],
+["gcd and lcm","gcd(r, s) generates {nr + ms}. The lcm generates the common multiples. The order of (a₁,…,aₖ) in a product is the lcm of the orders.","6.8, 9.8, 9.9"],
+["Generating set","The smallest subgroup containing a set {aᵢ}. G is finitely generated if a finite set generates it.","7.6"],
+["Cayley digraph","A drawing of G with vertices the elements and labelled arrows for multiplication by each generator.","7"],
+["Homomorphism, kernel","φ(ab) = φ(a)φ(b). Ker φ = {x : φ(x) = e′}. φ is one-to-one iff Ker φ = {e}.","8.1, 8.6, 10.19"],
+["Permutation, Sₙ","A one-to-one onto map A → A. The permutations of {1,…,n} form the symmetric group Sₙ of order n!.","4.6, 4.9"],
+["Cycle, transposition","A k-cycle moves k numbers around a loop; a 2-cycle is a transposition. Disjoint cycles commute and every permutation is a product of them.","4, 8.14"],
+["Even / odd, Aₙ","Even or odd by the parity of the number of transpositions (never both). The even ones form Aₙ of order n!/2.","8.22–8.25"],
+["Cayley’s theorem","Every group is isomorphic to a group of permutations, via x ↦ λₓ, λₓ(g) = xg.","8.10, 8.11"],
+["Dihedral group Dₙ","Symmetries of a regular n-gon, order 2n, with ρⁿ = μ² = ι and ρμ = μρⁿ⁻¹. Every μρᵏ has order 2.","4.16–4.22"],
+["Direct product","G₁ × … × Gₙ with componentwise operation. ℤ<sub>m</sub> × ℤ<sub>n</sub> ≅ ℤ<sub>mn</sub> iff gcd(m, n) = 1.","9.1, 9.5"],
+["Fundamental theorem","Every finitely generated abelian group is a product of cyclic groups: prime-power form (9.12) or invariant-factor form d₁ | d₂ | … (9.14).","9.12, 9.14"],
+["Indecomposable","Not isomorphic to a product of two proper nontrivial subgroups. Finite abelian ones are the cyclic groups of prime-power order.","9.17, 9.18"],
+["Left coset, index","aH = {ah : h ∈ H}. The index (G : H) is the number of left cosets.","10.2, 10.10"],
+["Lagrange’s theorem","For finite G and H ≤ G, |H| divides |G|, so |G| = (G : H)|H|. A group of prime order is cyclic.","10.7, 10.8"],
+["Isometry","A distance-preserving map of the plane. The isometries form a group under composition.","2.13, 11"],
+["Normal subgroup","H ⊴ G when gH = Hg for all g, equivalently ghg⁻¹ ∈ H, or H is the kernel of a homomorphism.","12.3, 12.17"],
+["Factor group G/H","For H normal, the cosets under (aH)(bH) = (ab)H. The map x ↦ xH is a homomorphism with kernel H.","12.8–12.12"],
+["Automorphism, conjugation","An isomorphism G → G. Conjugation by g, x ↦ gxg⁻¹, is the inner automorphism.","12.19"],
+["Simple group","Nontrivial with no proper nontrivial normal subgroup. Aₙ is simple for n ≥ 5; G/M is simple iff M is maximal normal.","13.16–13.20"],
+["Commutator subgroup","Generated by all aba⁻¹b⁻¹. It is normal, and G/N is abelian iff it lies in N.","13.22"],
+["Homomorphism properties","φ(e) = e′, φ(a⁻¹) = φ(a)⁻¹. The image φ[G] is a subgroup of G′, the preimage of a subgroup is a subgroup, and the preimage of a normal subgroup is normal. Ker φ ⊴ G.","13"],
+["Fundamental homomorphism theorem (First isomorphism theorem)","If φ: G → G′ is a homomorphism with kernel K, then G/K ≅ φ[G] via gK ↦ φ(g). Every normal subgroup is the kernel of x ↦ xH.","14, 34"],
+["Second isomorphism theorem","For H ≤ G and N ⊴ G: HN ≤ G, H ∩ N ⊴ H, and HN/N ≅ H/(H ∩ N).","34"],
+["Third isomorphism theorem","If K ⊴ G, H ⊴ G and K ≤ H, then (G/K)/(H/K) ≅ G/H.","34"],
+["Correspondence theorem","For N ⊴ G, subgroups of G containing N correspond one-to-one with subgroups of G/N via H ↦ H/N, and normal ones correspond to normal ones.","34"],
+["Center, centralizer, normalizer","Z(G) = {z : zg = gz for all g}. C(a) = {g : ga = ag}. N(H) = {g : gHg⁻¹ = H}, the largest subgroup in which H is normal. H ⊴ G iff N(H) = G.","15, 36"],
+["Automorphisms Aut(G), Inn(G)","Aut(G) is the group of isomorphisms G → G. Inn(G) = {conjugations} ⊴ Aut(G), and Inn(G) ≅ G/Z(G).","14, 15"],
+["Group action, G-set","A set X with gx ∈ X, ex = x and (g₁g₂)x = g₁(g₂x). Orbit Gx, stabilizer G<sub>x</sub> = {g : gx = x}. |Gx| = (G : G<sub>x</sub>).","16"],
+["Burnside’s formula","The number of orbits of X under G is (1/|G|) Σ<sub>g</sub> |X<sub>g</sub>|, where X<sub>g</sub> = the points fixed by g. Used to count colourings and necklaces.","17"],
+["Class equation, p-groups","|G| = |Z(G)| + Σ(G : C(a<sub>i</sub>)), one a<sub>i</sub> per non-central class. A p-group (order pⁿ) has a nontrivial center, and is solvable.","16, 37"],
+["Cauchy’s theorem","If a prime p divides |G|, then G has an element (so a subgroup) of order p.","36"],
+["Sylow p-subgroup","A subgroup of maximal prime-power order pᵏ, where |G| = pᵏm and p ∤ m.","36"],
+["First Sylow theorem","If pⁱ divides |G|, then G has a subgroup of order pⁱ. In particular a Sylow p-subgroup exists for every prime p.","36"],
+["Second Sylow theorem","Any two Sylow p-subgroups of G are conjugate.","36"],
+["Third Sylow theorem","For |G| = pᵏm with p ∤ m, the number n<sub>p</sub> of Sylow p-subgroups satisfies n<sub>p</sub> ≡ 1 (mod p) and n<sub>p</sub> divides m. n<sub>p</sub> = 1 iff the Sylow p-subgroup is normal.","36"],
+["Using Sylow theory","If |G| = pq with p < q and p ∤ q − 1, then G is cyclic (so every group of order 15 is ℤ₁₅). Showing some n<sub>p</sub> = 1 gives a proper normal subgroup, so G is not simple (e.g. orders 20, 30, 56, 100).","37"],
+["Normal and subnormal series","Subnormal: G = H₀ ≥ H₁ ≥ … ≥ H<sub>n</sub> = {e} with each H<sub>i+1</sub> ⊴ H<sub>i</sub>. Normal series: each H<sub>i</sub> ⊴ G. The factor groups are H<sub>i</sub>/H<sub>i+1</sub>.","35"],
+["Refinement, equivalent series","A refinement inserts extra terms. Two series are equivalent if their factor groups match up to isomorphism after reordering.","35"],
+["Zassenhaus lemma, Schreier theorem","Zassenhaus (butterfly) lemma compares two subgroup chains. Schreier: any two subnormal (normal) series of G have equivalent refinements.","34, 35"],
+["Composition series, Jordan–Hölder","A subnormal series with no proper refinement, so every factor is simple. Jordan–Hölder: any two composition series of G are equivalent. ℤ has none. A finite group always has one.","35"],
+["Principal (chief) series","A normal series that has no proper refinement as a normal series.","35"],
+["Solvable group","G has a subnormal series with abelian factors, equivalently all composition factors are cyclic of prime order. Abelian groups, p-groups and S₃, S₄ are solvable. S<sub>n</sub> and A<sub>n</sub> (n ≥ 5) are not.","35"],
+["Free abelian group, basis","A group isomorphic to ℤ × … × ℤ (r copies). It has a basis {b₁,…,b<sub>r</sub>} so each element is uniquely Σ n<sub>i</sub>b<sub>i</sub>. The rank r is unique.","38"],
+["Free abelian groups: facts","A subgroup of a free abelian group of rank r is free abelian of rank ≤ r. A finitely generated abelian group is ℤʳ × (finite group), where r is the Betti number.","38, 11"],
+["Free group F[A]","Reduced words in letters aᵢ and aᵢ⁻¹ on a set A, with concatenation and cancellation. If A has one letter, F ≅ ℤ. Every subgroup of a free group is free.","39"],
+["Universal property of free groups","Any map from A to a group G extends uniquely to a homomorphism F[A] → G. Hence every group is a homomorphic image of a free group.","39"],
+["Group presentation ⟨A | R⟩","The group F[A]/N, where N is the normal closure of the relators R. Examples: ℤ<sub>n</sub> = ⟨a | aⁿ⟩, ℤ×ℤ = ⟨a, b | ab = ba⟩, D<sub>n</sub> = ⟨r, s | rⁿ, s², srs = r⁻¹⟩.","40"],
+["Von Dyck, finitely presented","If G is generated by a set whose elements satisfy the relations R, then G is a homomorphic image of ⟨A | R⟩. A group is finitely presented if A and R are finite. Deciding whether two presentations are isomorphic has no general algorithm.","40"],
+["Maximal normal subgroup","M ⊴ G, M ≠ G, with no normal N between M and G. G/M is simple iff M is maximal normal.","15"]
+];
+const CF=new Set(),LBL={cyc:"cyclic",dih:"dihedral",perm:"permutation",mat:"matrix",prod:"direct product",unit:"units / fields",gal:"Galois",num:"number group",free:"free / presented",ord:"by order",thy:"theory"};
+let CV="list";
+const plain=h=>h.replace(/<[^>]+>/g,"").toLowerCase();
+const ABL={ab:"abelian",non:"nonabelian",both:"abelian only for small n"};
+const TR=[["cyc",/^(ℤn|un|nℤ|\{e\}|g\(gf)/],["dih",/^dn$/],["perm",/^(sn|an|a5|cube|s5)/],["mat",/^(gl|sl|o\(n\)|ℍ|ℝⁿ)/],["prod",/^(ℤm|ℤ ×|v \()/],["unit",/^(u\(n\)|u\(r\)|f\*)/],["gal",/^(g\(|aut\(e\))/],["num",/^(ℤ, ℚ|nℤ|ℚ⁺|\(ℚ⁺|ℝc|u$|f\(ℝ\))/],["free",/^(f\[a\]|⟨a|ℤʳ|ℤ × ℤ, ℤʳ)/],["ord",/^groups of order/],["thy",/^(z\(g\)|aut\(g\)|g\/h|simple|solvable|sylow|p-groups|finite abelian|\(r, \+\)|ℤ-modules)/]];
+function tagsOf(g){if(g[10])return g[10].split(" ");const s=plain(g[0]);return TR.filter(([k,r])=>r.test(s)).map(x=>x[0])}
+function matches(g,k){return k=="fin"?!!g[2]:k=="inf"?!g[2]:k=="ab"||k=="non"||k=="both"?g[3]==k:tagsOf(g).includes(k)}
+function viewCat(){return `<p class="note">Pick one or more filters to find groups (filters combine, for example <b>Finite + Abelian + Cyclic</b>). Type in the search box to look for a name, symbol, order or section.</p><div class="row"><label>Search groups<input id="q" placeholder="dihedral, order, 2.14…"></label><div id="views" role="group" aria-label="View"></div></div><div id="chips" role="group" aria-label="Filters" style="margin-bottom:8px"></div><button class="go" id="b" style="display:none" aria-hidden="true" tabindex="-1"></button><p class="note" id="cnt"></p><div id="cat"></div><p class="note">Section numbers refer to Fraleigh–Brand, 8th edition. “Explore live” opens the matching calculator. “Abelian” means always abelian; “abelian only for small n” means it depends on n (for example S<sub>n</sub>, GL(n, ℝ)).</p>`}
+function runCat(){
+ const F=[["fin","Finite"],["inf","Infinite"],["ab","Abelian"],["non","Nonabelian"],["both","Abelian only for small n"],["cyc","Cyclic"],["dih","Dihedral"],["perm","Permutation (Sₙ, Aₙ…)"],["prod","Direct products"],["unit","Units & fields"],["mat","Matrix groups"],["gal","Galois groups"],["num","Number groups"],["free","Free & presented"],["ord","Groups of a given order"],["thy","General theory"]],q=$("#q").value.toLowerCase();
+ $("#chips").innerHTML=`<button class="chip" aria-pressed="${CF.size==0}" data-k="all">All</button>`+F.map(([k,l])=>`<button class="chip" aria-pressed="${CF.has(k)}" data-k="${k}">${l}</button>`).join("");
+ $("#views").innerHTML=[["list","List"],["cards","Cards"]].map(([k,l])=>`<button class="chip" aria-pressed="${CV==k}" data-v="${k}">${l} view</button>`).join("");
+ document.querySelectorAll("#chips .chip").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(k=="all")CF.clear();else CF.has(k)?CF.delete(k):CF.add(k);runCat()});
+ document.querySelectorAll("#views .chip").forEach(b=>b.onclick=()=>{CV=b.dataset.v;runCat()});
+ $("#q").oninput=runCat;
+ const L=G.filter(g=>[...CF].every(k=>matches(g,k))&&plain(g.join(" ")).includes(q));
+ $("#cnt").textContent=L.length+" of "+G.length+" groups";
+ const ex=g=>g[8]>=0?`<button class="go sm" data-t="${g[8]}"${g[9]?` data-p='${JSON.stringify(g[9])}'`:""}>Explore live</button>`:"",tg=g=>tagsOf(g).map(t=>LBL[t]).join(", ")||"—";
+ $("#cat").innerHTML=!L.length?"<p>No group matches.</p>":CV=="list"?
+  `<div class="sc"><table class="tl"><tr><th>Group</th><th>Name</th><th>Size</th><th>Abelian?</th><th>Order</th><th>Type</th><th>Section</th><th></th></tr>`+L.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td>${g[2]?"finite":"infinite"}</td><td>${ABL[g[3]]}</td><td>${g[4]}</td><td>${tg(g)}</td><td>${g[6]}</td><td>${ex(g)}</td></tr>`).join("")+`</table></div>`:
+  `<div class="grid">`+L.map(g=>`<article class="card"><div class="sym">${g[0]}</div><h3>${g[1]}</h3><div class="tags"><span>${g[2]?"finite":"infinite"}</span><span>${ABL[g[3]]}</span><span>order ${g[4]}</span>${tagsOf(g).map(t=>`<span>${LBL[t]}</span>`).join("")}</div><p><b>Operation:</b> ${g[5]}</p><p>${g[7]}</p><div class="ref">Section ${g[6]}</div>${ex(g)}</article>`).join("")+`</div>`;
+ document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{show(+b.dataset.t);if(b.dataset.p){const[s,v,bt]=JSON.parse(b.dataset.p),el=$(s);if(el){el.value=v;$(bt).click()}}})}
+function viewDef(){return `<div class="row"><label>Search definitions<input id="q" placeholder="coset, normal, cyclic…"></label></div><button class="go" id="b" style="display:none" aria-hidden="true" tabindex="-1"></button><p class="note" id="cnt"></p><div id="dl"></div>`}
+function runDef(){
+ const q=$("#q").value.toLowerCase();$("#q").oninput=runDef;
+ const L=D.filter(d=>plain(d.join(" ")).includes(q));
+ $("#cnt").textContent=L.length+" of "+D.length+" definitions and key theorems";
+ $("#dl").innerHTML=L.map(d=>`<div class="def"><b>${d[0]}.</b> ${d[1]} <small>(Section ${d[2]})</small></div>`).join("")||"<p>Nothing found.</p>"}
+// ---- Euler group U(n) and other small groups
+function invOf(ms){const by={};ms.forEach(m=>{const f=factor(m);for(const p in f)(by[p]=by[p]||[]).push(Math.pow(+p,f[p]))});
+ const ps=Object.keys(by);ps.forEach(p=>by[p].sort((a,b)=>b-a));const L=Math.max(0,...ps.map(p=>by[p].length)),inv=[];
+ for(let j=0;j<L;j++){let d=1;ps.forEach(p=>{if(by[p][j])d*=by[p][j]});inv.push(d)}return inv.reverse()}
+function uComp(n){const f=factor(n),c=[];for(const p in f){const k=f[p],P=+p;if(P==2){if(k==2)c.push(2);else if(k>=3){c.push(2);c.push(Math.pow(2,k-2))}}else c.push((P-1)*Math.pow(P,k-1))}return c}
+const modord=(a,n)=>{let x=a%n,o=1;if(n==1)return 1;while(x!=1){x=x*a%n;o++}return o};
+function viewEuler(){return `<h3>Euler group U(n) = (ℤ/nℤ)<sup>×</sup></h3><div class="row"><label>n (1 to 500)<input id="en" type="number" min="1" max="500" value="15" style="width:110px"></label><button class="go" id="b">Build U(n)</button></div><div id="r"></div>
+<p class="note">U(n) = {a mod n : gcd(a, n) = 1} under multiplication mod n. Its order is Euler’s φ(n), so Euler’s theorem a<sup>φ(n)</sup> ≡ 1 (mod n) is just Lagrange’s theorem. U(n) is cyclic exactly when n = 1, 2, 4, p<sup>k</sup> or 2p<sup>k</sup> (p an odd prime); a generator is then a <i>primitive root</i>.</p>
+<h3>Other small groups</h3><div class="row"><label>Group<select id="og" style="font:1rem system-ui;padding:7px;border:1px solid var(--bd);border-radius:5px;background:var(--bg);color:var(--tx)"><option value="Q8">Quaternion group Q₈</option><option value="S3">S₃</option><option value="D4">D₄ (symmetries of a square)</option><option value="A4">A₄</option><option value="S4">S₄</option><option value="Z7Z3">ℤ₇ ⋊ ℤ₃ (order 21)</option><option value="Cube">Rotations of a cube (order 24)</option><option value="A5">A₅ (order 60)</option></select></label><button class="go" id="b2">Show group</button></div><div id="r2"></div>
+<p class="note">Built by closing the generators under multiplication. Permutations compose right to left. Q₈ = {±1, ±i, ±j, ±k} with i² = j² = k² = ijk = −1. ℤ₇ ⋊ ℤ₃ = ⟨a, b | a⁷ = b³ = 1, ba = a²b⟩ is built from x ↦ x+1 and x ↦ 2x on ℤ₇. Cube rotations act on the 6 faces (order 24, ≅ S₄); points of the cube are numbered top, bottom, front, back, left, right as 1–6.</p>`}
+function runEuler(){
+ const n=+$("#en").value;
+ if(!(n>=1&&n<=500)){$("#r").innerHTML="<p>Use n from 1 to 500.</p>"}else{
+ const u=[...Array(n).keys()].filter(k=>gcd(k,n)==1&&(n>1||k==0)),N=u.length;
+ const ord=u.map(a=>modord(a,n)),inv=u.map(a=>u.find(b=>a*b%n==(n==1?0:1))),comps=uComp(n).filter(x=>x>1),iv=invOf(comps),cyc=iv.length<=1;
+ const prim=cyc?u.filter((a,i)=>ord[i]==N&&N>0):[];
+ let h=kp([[N,"|U("+n+")| = φ("+n+")"],[cyc?"yes":"no","cyclic?"],[Math.max(...ord),"largest element order"],[cyc?prim.length:"none","primitive roots"]])+
+ `<p>Structure: U(${n}) ≅ <b>${tex(iv)}</b> (invariant factors)${cyc&&N>1?`; primitive roots: ${prim.slice(0,20).join(", ")}${prim.length>20?"…":""}`:""}</p>
+ <p class="note">Check with Euler: for any unit a, a<sup>${N}</sup> mod ${n} = 1. Example a = ${u[u.length>1?1:0]}: ${u[u.length>1?1:0]}<sup>${N}</sup> ≡ ${(()=>{let x=1;for(let i=0;i<N;i++)x=x*u[u.length>1?1:0]%n;return x%n})()} (mod ${n}). Every element order divides ${N}.</p>
+ <h3>Order histogram</h3>${histHTML(hist(ord))}`;
+ if(N<=36){h+=`<h3>Cayley table (× mod ${n})</h3><div class="sc"><table><tr><th>×</th>${u.map(a=>`<th>${a}</th>`).join("")}</tr>`+u.map(a=>`<tr><th>${a}</th>${u.map(b=>`<td>${a*b%n}</td>`).join("")}</tr>`).join("")+`</table></div>`}
+ h+=`<h3>Elements, orders and inverses</h3><div class="sc"><table><tr><th>a</th><th>order</th><th>inverse</th></tr>`+u.slice(0,200).map((a,i)=>`<tr><td>${a}</td><td>${ord[i]}</td><td>${inv[i]}</td></tr>`).join("")+`</table></div>${N>200?'<p class="note">First 200 elements shown.</p>':""}`;
+ h+=`<h3>Table of U(m) for m = 1…40</h3><div class="sc"><table><tr><th>m</th><th>φ(m)</th><th>U(m) ≅</th><th>cyclic?</th><th>smallest primitive root</th></tr>`+[...Array(40).keys()].map(i=>{const m=i+1,f=phi(m),v=invOf(uComp(m).filter(x=>x>1)),c=v.length<=1;let pr="–";if(c&&m>2){for(let a=2;a<m;a++)if(gcd(a,m)==1&&modord(a,m)==f){pr=a;break}}else if(c)pr=m==1?"0":"1";
+  return `<tr${m==n?' style="background:var(--bg);font-weight:700"':""}><td>${m}</td><td>${f}</td><td>${tex(v)}</td><td>${c?"yes":"no"}</td><td>${pr}</td></tr>`}).join("")+`</table></div>`;
+ $("#r").innerHTML=h}
+ $("#b2").onclick=runOther;runOther()}
+function closure(gens,mul,key,id){const els=[id],seen=new Set([key(id)]);for(let i=0;i<els.length;i++)for(const g of gens){const x=mul(g,els[i]),k=key(x);if(!seen.has(k)){seen.add(k);els.push(x)}}return els}
+const pmul=(p,q)=>q.map(x=>p[x]),pnm=p=>cycles(p).filter(c=>c.length>1).map(c=>"("+c.join(" ")+")").join("")||"e";
+const qmul=(p,q)=>[p[0]*q[0]-p[1]*q[1]-p[2]*q[2]-p[3]*q[3],p[0]*q[1]+p[1]*q[0]+p[2]*q[3]-p[3]*q[2],p[0]*q[2]-p[1]*q[3]+p[2]*q[0]+p[3]*q[1],p[0]*q[3]+p[1]*q[2]-p[2]*q[1]+p[3]*q[0]];
+const qnm=v=>{const a=v.findIndex(x=>x!=0),s=v[a]<0;return a==0?(s?"−1":"1"):(s?"−":"")+"ijk"[a-1]};
+function mkGroup(id){
+ const pk=p=>p.join(""),I4=[0,1,2,3];
+ if(id=="Q8")return{nm:qnm,mul:qmul,els:closure([[0,1,0,0],[0,0,1,0]],qmul,v=>v.join(),[1,0,0,0]),t:"Q₈"};
+ if(id=="S3")return{nm:pnm,mul:pmul,els:closure([[1,0,2],[1,2,0]],pmul,pk,[0,1,2]),t:"S₃"};
+ if(id=="D4")return{nm:pnm,mul:pmul,els:closure([[1,2,3,0],[0,3,2,1]],pmul,pk,I4),t:"D₄"};
+ if(id=="A4")return{nm:pnm,mul:pmul,els:closure([[1,2,0,3],[0,2,3,1]],pmul,pk,I4),t:"A₄"};
+ if(id=="Z7Z3")return{nm:pnm,mul:pmul,els:closure([[1,2,3,4,5,6,0],[0,2,4,6,1,3,5]],pmul,pk,[0,1,2,3,4,5,6]),t:"ℤ₇ ⋊ ℤ₃"};
+ if(id=="Cube")return{nm:pnm,mul:pmul,els:closure([[0,1,5,4,2,3],[2,3,1,0,4,5]],pmul,pk,[0,1,2,3,4,5]),t:"cube rotations"};
+ if(id=="A5")return{nm:pnm,mul:pmul,els:closure([[1,2,3,4,0],[1,2,0,3,4]],pmul,pk,[0,1,2,3,4]),t:"A₅"};
+ return{nm:pnm,mul:pmul,els:closure([[1,0,2,3],[1,2,3,0]],pmul,pk,I4),t:"S₄"}}
+function runOther(){
+ const g=mkGroup($("#og").value),E=g.els,N=E.length,key=v=>v.join(","),ix=new Map(E.map((e,i)=>[key(e),i])),nm=E.map(g.nm);
+ const T2=E.map(a=>E.map(b=>ix.get(key(g.mul(a,b)))));
+ const id=[...Array(N).keys()].find(i=>T2[i].every((x,j)=>x==j)),inv=[...Array(N).keys()].map(i=>T2[i].indexOf(id));
+ const ord=[...Array(N).keys()].map(i=>{let x=i,o=1;while(x!=id){x=T2[x][i];o++}return o});
+ const ab=T2.every((r,i)=>r.every((x,j)=>x==T2[j][i])),ctr=[...Array(N).keys()].filter(i=>T2[i].every((x,j)=>x==T2[j][i]));
+ const seen=new Set();let cc=0;for(let a=0;a<N;a++)if(!seen.has(a)){cc++;for(let x=0;x<N;x++)seen.add(T2[T2[x][a]][inv[x]])}
+ const isP=g.mul===pmul,par=E.map(e=>isP?psign(e):0),nEv=par.filter(x=>x>0).length,pl=i=>!isP?"—":par[i]>0?'<span class="ev">even</span>':'<span class="od">odd</span>';
+ let h=kp([[N,"order of "+g.t],[ab?"yes":"no","abelian?"],[ctr.length,"|centre|"],[cc,"conjugacy classes"],[Math.max(...ord)==N?"yes":"no","cyclic?"]].concat(isP?[[nEv,"even elements"],[N-nEv,"odd elements"]]:[]))+(isP?`<p class="note">Even/odd = parity of the permutation (sign +1 or −1). The even elements form a subgroup of index ${nEv==N?1:2}${nEv==N?" (all elements are even)":""}.</p>`:`<p class="note">Q₈ is not given as a permutation group here, so even/odd does not apply to its elements.</p>`)+
+ `<p>Centre: {${ctr.map(i=>nm[i]).join(", ")}}</p><h3>Order histogram</h3>${histHTML(hist(ord))}`;
+ if(N<=24)h+=`<h3>Cayley table</h3><div class="sc"><table><tr><th>·</th>${nm.map(x=>`<th>${x}</th>`).join("")}</tr>`+nm.map((a,i)=>`<tr><th>${a}</th>${T2[i].map(j=>`<td>${nm[j]}</td>`).join("")}</tr>`).join("")+`</table></div>`;
+ h+=`<h3>Elements, orders and inverses</h3><div class="sc"><table><tr><th>element</th><th>order</th><th>inverse</th><th>even / odd</th></tr>`+nm.map((a,i)=>`<tr><td>${a}</td><td>${ord[i]}</td><td>${nm[inv[i]]}</td><td>${pl(i)}</td></tr>`).join("")+`</table></div>`;
+ $("#r2").innerHTML=h}
+
+function viewSylow(){return `<div class="row"><label>Order |G| = n (2 to 2000)<input id="sn2" type="number" min="2" max="2000" value="30" style="width:110px"></label><button class="go" id="b">Apply Sylow theorems</button></div><div id="r"></div>
+<p class="note">Write n = pᵏ·m with p ∤ m. Third Sylow theorem: n<sub>p</sub> divides m and n<sub>p</sub> ≡ 1 (mod p). If only one value is possible, that Sylow subgroup is normal, so G is not simple (when n is not prime). First Sylow theorem: G has a subgroup of every order pⁱ dividing n.</p>
+<h3>Series of groups: quick reference</h3><p class="note">Solvable ⇔ a subnormal series with abelian factors. Examples: ℤ<sub>12</sub> ⊳ ℤ<sub>6</sub> ⊳ ℤ<sub>3</sub> ⊳ {0} (composition factors ℤ<sub>2</sub>, ℤ<sub>2</sub>, ℤ<sub>3</sub>); S₄ ⊳ A₄ ⊳ V ⊳ ⟨(1 2)(3 4)⟩ ⊳ {e} (factors ℤ<sub>2</sub>, ℤ<sub>3</sub>, ℤ<sub>2</sub>, ℤ<sub>2</sub>); S₅ ⊳ A₅ ⊳ {e} has the simple non-abelian factor A₅, so S₅ is not solvable. Jordan–Hölder: the composition factors are unique up to order.</p>`}
+function runSylow(){
+ const n=+$("#sn2").value;if(!(n>=2&&n<=2000)){$("#r").innerHTML="<p>Use n from 2 to 2000.</p>";return}
+ const f=factor(n),rows=Object.keys(f).map(q=>{const p=+q,k=f[q],m=n/Math.pow(p,k),np=[...Array(m).keys()].map(i=>i+1).filter(d=>m%d==0&&d%p==1);return{p,k,m,np}});
+ const forced=rows.filter(r=>r.np.length==1&&r.m>1),prime=rows.length==1&&rows[0].k==1&&rows[0].m==1;
+ $("#r").innerHTML=kp([[n,"|G|"],[rows.length,"distinct primes"],[forced.length,"Sylow subgroups forced normal"]])+
+ `<div class="sc"><table><tr><th>p</th><th>|Sylow p| = pᵏ</th><th>m = n / pᵏ</th><th>possible n<sub>p</sub></th><th>conclusion</th></tr>`+rows.map(r=>`<tr><td>${r.p}</td><td>${Math.pow(r.p,r.k)}</td><td>${r.m}</td><td>${r.np.join(", ")}</td><td>${r.m==1?"G is a p-group":r.np.length==1?"normal Sylow subgroup":"not decided"}</td></tr>`).join("")+`</table></div>`+
+ `<p>${prime?"n is prime, so G ≅ ℤ<sub>"+n+"</sub> is simple.":forced.length?"Some Sylow subgroup is normal and proper, so a group of order "+n+" is <b>not simple</b>.":rows.length==1?"G is a p-group, so it has a nontrivial center and is solvable.":"Counting alone does not rule out simplicity here. Other arguments are needed (for example n = 60, where A₅ is simple)."}</p>`+
+ `<p class="note">Subgroup orders guaranteed by the First Sylow theorem: ${rows.flatMap(r=>[...Array(r.k).keys()].map(i=>Math.pow(r.p,i+1))).sort((a,b)=>a-b).join(", ")}.</p>`}
+
+// ---- Exercises keyed to Fraleigh, A First Course in Abstract Algebra (8th ed.)
+const EX=[
+{s:"1",t:"Identity of a new operation",q:"On the integers define a ∗ b = a + b + 1. What is the identity element of ∗?",k:"n",a:[-1],sol:"An identity e must satisfy a ∗ e = a + e + 1 = a for every a, so e = −1. Check: a ∗ (−1) = a − 1 + 1 = a, and the operation is commutative, so (−1) ∗ a = a too.",tab:-1},
+{s:"3",t:"Units modulo n",q:"How many elements does the group U(15) of units modulo 15 have?",k:"n",a:[8],sol:"The units are the residues coprime to 15: 1, 2, 4, 7, 8, 11, 13, 14. That is φ(15) = φ(3)·φ(5) = 2·4 = 8.",tab:6},
+{s:"4",t:"Reflections in a dihedral group",q:"The group D<sub>6</sub> is the symmetry group of a regular hexagon and has 12 elements. How many of them are reflections?",k:"n",a:[6],sol:"D<sub>n</sub> has n rotations (including the identity) and n reflections. For n = 6 that is 6 rotations and 6 reflections, 12 in all.",tab:5},
+{s:"5",t:"Counting subgroups",q:"How many subgroups does Z<sub>12</sub> have?",k:"n",a:[6],sol:"A cyclic group of order n has exactly one subgroup for each divisor of n. The divisors of 12 are 1, 2, 3, 4, 6, 12, so there are 6 subgroups.",tab:-1},
+{s:"6",t:"Order of an element",q:"What is the order of 8 in Z<sub>20</sub>?",k:"n",a:[5],sol:"The order of a in Z<sub>n</sub> is n / gcd(a, n). Here gcd(8, 20) = 4, so the order is 20 / 4 = 5. Indeed 5·8 = 40 ≡ 0 (mod 20).",tab:-1},
+{s:"6",t:"Generators of a cyclic group",q:"How many generators does Z<sub>18</sub> have?",k:"n",a:[6],sol:"The generators are the residues coprime to 18: 1, 5, 7, 11, 13, 17. That is φ(18) = 6.",tab:-1},
+{s:"8",t:"Order of a permutation",q:"What is the order of the permutation (1 2 3)(4 5) in S<sub>5</sub>?",k:"n",a:[6],sol:"The order of a product of disjoint cycles is the lcm of the cycle lengths: lcm(3, 2) = 6.",tab:4},
+{s:"8",t:"Even or odd",q:"Is the permutation (1 2 3 4)(5 6) even or odd? (type even or odd)",k:"t",a:["even","e"],sol:"A cycle of length m is a product of m − 1 transpositions. So (1 2 3 4) is 3 transpositions and (5 6) is 1, for 4 in total. Four is even, so the permutation is even.",tab:4},
+{s:"9",t:"Abelian groups of a given order",q:"Up to isomorphism, how many abelian groups have order 72?",k:"n",a:[6],sol:"72 = 2³ · 3². The 2-part has p(3) = 3 choices and the 3-part has p(2) = 2 choices, giving 3 · 2 = 6 groups.",tab:2},
+{s:"10",t:"Counting cosets",q:"How many left cosets does the subgroup ⟨6⟩ have in Z<sub>18</sub>?",k:"n",a:[6],sol:"⟨6⟩ = {0, 6, 12} has order 3. By Lagrange, the number of cosets is 18 / 3 = 6.",tab:-1},
+{s:"10",t:"Lagrange bound",q:"What is the largest possible order of a proper subgroup of a group of order 36?",k:"n",a:[18],sol:"By Lagrange, the order of a subgroup divides 36. The largest proper divisor is 18, and it is attained, for example, by the subgroup of Z<sub>36</sub> generated by 2.",tab:-1},
+{s:"12",t:"A factor group",q:"Z<sub>12</sub>/⟨4⟩ is isomorphic to Z<sub>n</sub>. What is n?",k:"n",a:[4],sol:"⟨4⟩ = {0, 4, 8} has order 3, so the factor group has order 12 / 3 = 4. The coset 1 + ⟨4⟩ has order 4, so the factor group is cyclic and isomorphic to Z<sub>4</sub>.",tab:-1},
+{s:"13",t:"Simple groups",q:"Is every group of order 15 simple? (yes or no)",k:"t",a:["no","n"],sol:"No. A group of order 15 has n<sub>5</sub> ≡ 1 (mod 5) dividing 3, so n<sub>5</sub> = 1 and the Sylow 5-subgroup is a proper normal subgroup. In fact every group of order 15 is cyclic.",tab:7},
+{s:"15",t:"Counting with Burnside",q:"Beads of 2 colors are strung on a 4-bead necklace, and two necklaces are the same if one is a rotation of the other. How many distinct necklaces are there?",k:"n",a:[6],sol:"Rotations by 0°, 90°, 180°, 270° fix 2⁴, 2¹, 2², 2¹ colorings respectively. Burnside’s count is (16 + 2 + 4 + 2) / 4 = 24 / 4 = 6.",tab:-1},
+{s:"17",t:"Sylow counting",q:"How many Sylow 3-subgroups does a group of order 15 have?",k:"n",a:[1],sol:"n<sub>3</sub> ≡ 1 (mod 3) and n<sub>3</sub> divides 5. The only divisor of 5 that is 1 mod 3 is 1, so there is exactly one.",tab:7},
+{s:"17",t:"Possible Sylow counts",q:"List the possible values of n<sub>5</sub>, the number of Sylow 5-subgroups, in a group of order 30 (separate with commas).",k:"n",a:[1,6],sol:"n<sub>5</sub> ≡ 1 (mod 5) and n<sub>5</sub> divides 6. The divisors of 6 are 1, 2, 3, 6, and only 1 and 6 are 1 mod 5. So n<sub>5</sub> is 1 or 6.",tab:7}
+];
+let exOk={};
+function viewEx(){return `<p class="note">Exercises written in the spirit of the problems in Fraleigh, <i>A First Course in Abstract Algebra</i> (8th ed.), each keyed to the section it practises. They are original problems on the same topics, not copied from the book, so use the exercise sets at the end of each section for the book’s own wording. Type an answer, press Check, and open the solution when you are ready.</p>
+<button class="go" id="b" style="display:none" aria-hidden="true" tabindex="-1"></button><div class="score" id="sc" role="status"></div>
+`+EX.map((e,i)=>`<div class="xq" id="x${i}"><h4>Exercise ${i+1}<small>Fraleigh Section ${e.s}: ${e.t}</small></h4><p>${e.q}</p><div class="row"><input id="xi${i}" aria-label="Answer to exercise ${i+1}" autocomplete="off"><button class="chk" data-i="${i}">Check</button>${e.tab>=0?`<button class="go2" data-tab="${e.tab}">Open the related tab</button>`:""}<span class="fb" id="xf${i}" aria-live="polite"></span></div><details><summary>Show solution</summary><p>${e.sol}</p></details></div>`).join("")}
+function exCheck(i){
+ const e=EX[i],v=$("#xi"+i).value.toLowerCase().trim();let ok=false;
+ if(e.k=="n"){const m=(v.match(/-?\d+/g)||[]).map(Number).sort((x,y)=>x-y);ok=m.length==e.a.length&&m.every((x,j)=>x==e.a[j])}
+ else ok=e.a.includes(v);
+ exOk[i]=ok;const f=$("#xf"+i);f.textContent=v?(ok?"Correct.":"Not yet. Check the solution or try again."):"Type an answer first.";f.className="fb "+(ok?"y":"n");
+ $("#x"+i).dataset.ok=ok?"1":"0";exScore()}
+function exScore(){$("#sc").textContent="Correct: "+Object.values(exOk).filter(Boolean).length+" of "+EX.length}
+function runEx(){exScore();
+ document.querySelectorAll(".chk").forEach(b=>b.onclick=()=>exCheck(+b.dataset.i));
+ document.querySelectorAll(".go2").forEach(b=>b.onclick=()=>show(+b.dataset.tab));
+ EX.forEach((e,i)=>{$("#xi"+i).onkeydown=ev=>{if(ev.key=="Enter")exCheck(i)};if(exOk[i]!==undefined){const f=$("#xf"+i);f.textContent=exOk[i]?"Correct.":"";f.className="fb y";$("#x"+i).dataset.ok=exOk[i]?"1":"0"}})}
+const T=[["Group catalog",viewCat,runCat],["Definitions",viewDef,runDef],["Abelian classifier",viewAbelian,runAbelian],["Z<sub>n</sub> product builder",viewBuilder,runBuilder],["Permutations S<sub>n</sub>",viewPerm,()=>{runPerm();$("#b2").onclick=runSn;runSn()}],["Dihedral D<sub>n</sub>",viewDih,runDih],["Euler group U(n) &amp; others",viewEuler,runEuler],["Sylow &amp; series",viewSylow,runSylow],["Real life: tile inspection (D<sub>4</sub>)",viewTile,runTile],["All real-life problems",viewAll,()=>{}],["Report: demo, limits, conclusion",viewReport,runReport],["Exercises (Fraleigh)",viewEx,runEx]];
+function show(i){
+ $("#tabs").innerHTML=T.map((t,j)=>`<button role="tab" aria-selected="${j==i}" data-i="${j}">${t[0]}</button>`).join("");
+ document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>show(+b.dataset.i));
+ $("#out").innerHTML=T[i][1]();
+ const run=T[i][2];$("#b").onclick=run;
+ document.querySelectorAll("#out input").forEach(el=>el.addEventListener("keydown",e=>{if(e.key=="Enter")run()}));
+ run()}
+show(0);
+</script></body></html>
